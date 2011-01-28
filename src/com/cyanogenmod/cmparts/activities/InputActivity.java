@@ -37,6 +37,8 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String VOLUME_WAKE_PREF = "pref_volume_wake";
     private static final String TRACKBALL_UNLOCK_PREF = "pref_trackball_unlock";
     private static final String MENU_UNLOCK_PREF = "pref_menu_unlock";
+    private static final String VOLBTN_MUSIC_CTRL_PREF = "pref_volbtn_music_controls";
+    private static final String CAMBTN_MUSIC_CTRL_PREF = "pref_cambtn_music_controls";
     private static final String BUTTON_CATEGORY = "pref_category_button_settings";
     private static final String LOCKSCREEN_STYLE_PREF = "pref_lockscreen_style";
     private static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
@@ -90,6 +92,9 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private ListPreference mLockscreenMusicHeadsetPref;
 
     private MultiSelectListPreference mCalendarsPref;
+
+    private CheckBoxPreference mVolBtnMusicCtrlPref;
+    private CheckBoxPreference mCamBtnMusicCtrlPref;
 
     private Preference mUserDefinedKey1Pref;
     private Preference mUserDefinedKey2Pref;
@@ -246,6 +251,14 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mQtouchNumPref.setValue(qtouchNum);
         mQtouchNumPref.setOnPreferenceChangeListener(this);
 
+        /* Volume button music controls */
+        mVolBtnMusicCtrlPref = (CheckBoxPreference) prefSet.findPreference(VOLBTN_MUSIC_CTRL_PREF);
+        mVolBtnMusicCtrlPref.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.VOLBTN_MUSIC_CONTROLS, 1) == 1);
+        mCamBtnMusicCtrlPref = (CheckBoxPreference) prefSet.findPreference(CAMBTN_MUSIC_CTRL_PREF);
+        mCamBtnMusicCtrlPref.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.CAMBTN_MUSIC_CONTROLS, 0) == 1);
+
         PreferenceCategory buttonCategory = (PreferenceCategory)prefSet.findPreference(BUTTON_CATEGORY);
 
         if (!getResources().getBoolean(R.bool.has_trackball)) {
@@ -257,10 +270,28 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mUserDefinedKey3Pref = (Preference) prefSet.findPreference(USER_DEFINED_KEY3);
         mMessagingTabApp = (Preference) prefSet.findPreference(MESSAGING_TAB_APP);
 
+
         if (!"vision".equals(Build.DEVICE)) {
             buttonCategory.removePreference(mUserDefinedKey1Pref);
             buttonCategory.removePreference(mUserDefinedKey2Pref);
             buttonCategory.removePreference(mUserDefinedKey3Pref);
+	}
+        if (!"vision".equals(Build.DEVICE) &&
+                !getResources().getBoolean(R.bool.has_trackball) &&
+                !getResources().getBoolean(R.bool.has_camera_button)) {
+            prefSet.removePreference(buttonCategory);
+        } else {
+            if (!getResources().getBoolean(R.bool.has_trackball)) {
+                buttonCategory.removePreference(mTrackballWakePref);
+            }
+            if (!getResources().getBoolean(R.bool.has_camera_button)) {
+                buttonCategory.removePreference(mCamBtnMusicCtrlPref);
+            }
+            if (!"vision".equals(Build.DEVICE)) {
+                buttonCategory.removePreference(mUserDefinedKey1Pref);
+                buttonCategory.removePreference(mUserDefinedKey2Pref);
+                buttonCategory.removePreference(mUserDefinedKey3Pref);
+            }
         }
     }
 
@@ -333,7 +364,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             Settings.System.putInt(getContentResolver(),
                     Settings.System.TRACKBALL_WAKE_SCREEN, value ? 1 : 0);
             return true;
-		} else if (preference == mVolumeWakePref) {
+	} else if (preference == mVolumeWakePref) {
             value = mVolumeWakePref.isChecked();
             Settings.System.putInt(getContentResolver(),
 			        Settings.System.VOLUME_WAKE_SCREEN, value ? 1 : 0);
@@ -352,6 +383,16 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             value = mDisableUnlockTab.isChecked();
             Settings.Secure.putInt(getContentResolver(),
                     Settings.Secure.LOCKSCREEN_GESTURES_DISABLE_UNLOCK, value ? 1 : 0);
+        } else if (preference == mVolBtnMusicCtrlPref) {
+            value = mVolBtnMusicCtrlPref.isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.VOLBTN_MUSIC_CONTROLS, value ? 1 : 0);
+            return true;
+        } else if (preference == mCamBtnMusicCtrlPref) {
+            value = mCamBtnMusicCtrlPref.isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.CAMBTN_MUSIC_CONTROLS, value ? 1 : 0);
+            return true;
         } else if (preference == mUserDefinedKey1Pref) {
             pickShortcut(1);
             return true;

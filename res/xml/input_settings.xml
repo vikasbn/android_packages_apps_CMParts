@@ -95,9 +95,26 @@
         <CheckBoxPreference android:key="pref_menu_unlock"
             android:title="@string/pref_menu_unlock_title" android:summary="@string/pref_menu_unlock_summary" />
 
+
         <CheckBoxPreference android:key="lockscreen_disable_unlock_tab"
             android:title="@string/pref_lockscreen_disable_unlock_tab"
             android:summary="@string/pref_lockscreen_disable_unlock_tab_summary" />
+
+        <CheckBoxPreference android:key="pref_volbtn_music_controls"
+            android:title="@string/pref_volbtn_music_controls_title"
+            android:summary="@string/pref_volbtn_music_controls_summary" />
+
+        <CheckBoxPreference android:key="pref_cambtn_music_controls"
+            android:title="@string/pref_cambtn_music_controls_title"
+            android:summary="@string/pref_cambtn_music_controls_summary" />
+
+        <Preference android:key="pref_user_defined_key1"
+            android:title="@string/user_defined_key1" android:summary="@string/user_defined_not_set" />
+        <Preference android:key="pref_user_defined_key2"
+            android:title="@string/user_defined_key2" android:summary="@string/user_defined_not_set" />
+        <Preference android:key="pref_user_defined_key3"
+            android:title="@string/user_defined_key3" android:summary="@string/user_defined_not_set" />
+
 
         <CheckBoxPreference android:key="pref_volbtn_orientation"
             android:title="@string/pref_volbtn_orientation_title"
