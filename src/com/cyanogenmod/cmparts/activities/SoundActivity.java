@@ -27,6 +27,7 @@ public class SoundActivity extends PreferenceActivity implements
     private static final int DIALOG_QUIET_HOURS_START = 1;
     private static final int DIALOG_QUIET_HOURS_END = 2;
 
+    private static final String KEY_POWER_SOUNDS = "power_sounds";
     private static final String NOTIFICATIONS_FOCUS = "notif-focus";
     private static final String NOTIFICATIONS_SPEAKER = "notif-speaker";
     private static final String NOTIFICATIONS_ATTENUATION = "notif-attn";
@@ -66,7 +67,12 @@ public class SoundActivity extends PreferenceActivity implements
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
-        CheckBoxPreference p = (CheckBoxPreference) prefSet.findPreference(NOTIFICATIONS_FOCUS);
+        CheckBoxPreference p = (CheckBoxPreference) prefSet.findPreference(KEY_POWER_SOUNDS);
+        p.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.POWER_SOUNDS_ENABLED, 1) != 0);
+        p.setOnPreferenceChangeListener(this);
+
+        p = (CheckBoxPreference) prefSet.findPreference(NOTIFICATIONS_FOCUS);
         p.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.NOTIFICATIONS_AUDIO_FOCUS, 1) != 0);
         p.setOnPreferenceChangeListener(this);
@@ -158,6 +164,10 @@ public class SoundActivity extends PreferenceActivity implements
         if (key.equals(NOTIFICATIONS_FOCUS)) {
             Settings.System.putInt(getContentResolver(),
                 Settings.System.NOTIFICATIONS_AUDIO_FOCUS, getBoolean(newValue) ? 1 : 0);
+        }
+	else if (key.equals(KEY_POWER_SOUNDS)) {
+            Settings.System.putInt(getContentResolver(),
+                Settings.System.POWER_SOUNDS_ENABLED, getBoolean(newValue) ? 1 : 0);
         }
         else if (key.equals(NOTIFICATIONS_SPEAKER) ||
                 key.equals(RINGS_SPEAKER) ||
