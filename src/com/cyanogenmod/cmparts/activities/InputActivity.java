@@ -38,6 +38,9 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String USER_DEFINED_KEY2 = "pref_user_defined_key2";
     private static final String USER_DEFINED_KEY3 = "pref_user_defined_key3";
     private static final String MESSAGING_TAB_APP = "pref_messaging_tab_app";
+    private static final String KEYPAD_TYPE_PREF = "pref_keypad_type";
+    private static final String KEYPAD_TYPE_PERSIST_PROP = "persist.sys.keypad_type";
+    private static final String KEYPAD_TYPE_DEFAULT = "euro_qwerty";
 
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
@@ -49,6 +52,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private CheckBoxPreference mDisableUnlockTab;
 
     private ListPreference mLockscreenStylePref;
+    private ListPreference mKeypadTypePref;
 
     private Preference mUserDefinedKey1Pref;
     private Preference mUserDefinedKey2Pref;
@@ -128,6 +132,12 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         } else {
             mDisableUnlockTab.setEnabled(true);
         }
+
+	/* hw keyboard settings */
+        mKeypadTypePref = (ListPreference) prefSet.findPreference(KEYPAD_TYPE_PREF);
+        String keypadType = SystemProperties.get(KEYPAD_TYPE_PERSIST_PROP, KEYPAD_TYPE_DEFAULT);
+        mKeypadTypePref.setValue(keypadType);
+        mKeypadTypePref.setOnPreferenceChangeListener(this);
 
         PreferenceCategory buttonCategory = (PreferenceCategory)prefSet.findPreference(BUTTON_CATEGORY);
 
@@ -241,6 +251,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             } else {
                 mPhoneMessagingTabPref.setEnabled(true);
             }
+            return true;
+        }
+	else if (preference == mKeypadTypePref) {
+            String keypadType = (String) newValue;
+            SystemProperties.set(KEYPAD_TYPE_PERSIST_PROP, keypadType);
             return true;
         }
         return false;

@@ -213,6 +213,9 @@
     <string name="pref_messaging_tab_app_title">Messaging tab application</string>
     <string name="pref_lockscreen_style_title">Lockscreen style</string>
     <string name="pref_lockscreen_style_summary">Choose the style of the lockscreen</string>
+    <string name="pref_keypad_type_title">Keyboard layout</string>
+    <string name="pref_keypad_type_summary">Set hardware keyboard layout - qwerty, qwertz, azerty... (requires reboot)</string>
+    
 
     <!-- Long Press Home -->
     <string name="long_press_home_title">Long-press home settings</string>
@@ -311,6 +314,7 @@
     <string name="haptic_default_toast">Loading hard-coded defaults</string>
 
     <string name="general_title">General</string>
+    <string name="keypad_title">Keyboard</string>
 
     <!-- UI Settings : Power off prompt -->
     <string name="pref_power_prompt_title">Power prompt</string>
