@@ -149,7 +149,7 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
         /* Overscroll */
         mOverscrollPref = (CheckBoxPreference) prefSet.findPreference(OVERSCROLL_PREF);
         mOverscrollPref.setChecked(Settings.System.getInt(getContentResolver(), 
-                Settings.System.OVERSCROLL_EFFECT, 0) == 1);
+                Settings.System.OVERSCROLL_EFFECT, 1) == 1);
 
         mOverscrollWeightPref = (ListPreference) prefSet.findPreference(OVERSCROLL_WEIGHT_PREF);
         int overscrollWeight = Settings.System.getInt(getContentResolver(), Settings.System.OVERSCROLL_WEIGHT, 5);
