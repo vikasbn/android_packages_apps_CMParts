@@ -12,6 +12,7 @@ import android.gesture.GestureLibrary;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -40,7 +41,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String MESSAGING_TAB_APP = "pref_messaging_tab_app";
     private static final String KEYPAD_TYPE_PREF = "pref_keypad_type";
     private static final String KEYPAD_TYPE_PERSIST_PROP = "persist.sys.keypad_type";
-    private static final String KEYPAD_TYPE_DEFAULT = "euro_qwerty";
+    private static final String KEYPAD_TYPE_DEFAULT = "euro-qwerty";
 
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
