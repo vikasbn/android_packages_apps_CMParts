@@ -72,6 +72,15 @@
             android:summary="@string/user_defined_not_set"
             />
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/dock_title"
+        android:key="pref_category_dock_settings">
+
+        <CheckBoxPreference android:key="pref_dock_observer_off"
+            android:title="@string/pref_dock_observer_off_title"
+            android:summary="@string/pref_dock_observer_off_summary" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/keypad_title"
             android:key="pref_category_keypad_settings">
 
@@ -82,6 +91,6 @@
             android:entries="@array/pref_keypad_type_entries"
             android:entryValues="@array/pref_keypad_type_values" />
 
-</PreferenceCategory>
+    </PreferenceCategory>
 
 </PreferenceScreen>

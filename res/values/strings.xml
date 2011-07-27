@@ -215,6 +215,8 @@
     <string name="pref_lockscreen_style_summary">Choose the style of the lockscreen</string>
     <string name="pref_keypad_type_title">Keyboard layout</string>
     <string name="pref_keypad_type_summary">Set hardware keyboard layout - qwerty, qwertz, azerty... (requires reboot)</string>
+    <string name="pref_dock_observer_off_title">Disable dock observer</string>
+    <string name="pref_dock_observer_off_summary">No action on magnets, useful for users of carrying cases with magnetic closure</string>
     
 
     <!-- Long Press Home -->
@@ -315,6 +317,7 @@
 
     <string name="general_title">General</string>
     <string name="keypad_title">Keyboard</string>
+    <string name="dock_title">Dock</string>
 
     <!-- UI Settings : Power off prompt -->
     <string name="pref_power_prompt_title">Power prompt</string>

@@ -42,6 +42,9 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String KEYPAD_TYPE_PREF = "pref_keypad_type";
     private static final String KEYPAD_TYPE_PERSIST_PROP = "persist.sys.keypad_type";
     private static final String KEYPAD_TYPE_DEFAULT = "euro-qwerty";
+    private static final String DOCK_OBSERVER_OFF_PREF = "pref_dock_observer_off";
+    private static final String DOCK_OBSERVER_OFF_PERSIST_PROP = "persist.sys.dock_observer_off";
+    private static final String DOCK_OBSERVER_OFF_DEFAULT = "0";
 
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
@@ -51,6 +54,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private CheckBoxPreference mQuickUnlockScreenPref;
     private CheckBoxPreference mPhoneMessagingTabPref;
     private CheckBoxPreference mDisableUnlockTab;
+    private CheckBoxPreference mDockObserverOffPref;
 
     private ListPreference mLockscreenStylePref;
     private ListPreference mKeypadTypePref;
@@ -140,6 +144,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mKeypadTypePref.setValue(keypadType);
         mKeypadTypePref.setOnPreferenceChangeListener(this);
 
+	/* dock observer switch */
+        mDockObserverOffPref = (CheckBoxPreference) prefSet.findPreference(DOCK_OBSERVER_OFF_PREF);
+        String dockObserverOff = SystemProperties.get(DOCK_OBSERVER_OFF_PERSIST_PROP, DOCK_OBSERVER_OFF_DEFAULT);
+        mDockObserverOffPref.setChecked("1".equals(dockObserverOff));
+
         PreferenceCategory buttonCategory = (PreferenceCategory)prefSet.findPreference(BUTTON_CATEGORY);
 
         if (!getResources().getBoolean(R.bool.has_trackball)) {
@@ -228,6 +237,10 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
                     Settings.Secure.LOCKSCREEN_GESTURES_DISABLE_UNLOCK, value ? 1 : 0);
         } else if (preference == mUserDefinedKey1Pref) {
             pickShortcut(1);
+            return true;
+	} else if (preference == mDockObserverOffPref) {
+            SystemProperties.set(DOCK_OBSERVER_OFF_PERSIST_PROP,
+            	mDockObserverOffPref.isChecked() ? "1" : "0");
             return true;
         } else if (preference == mUserDefinedKey2Pref) {
             pickShortcut(2);
