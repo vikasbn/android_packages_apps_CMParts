@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -29,6 +30,7 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
 	private static final String EXTRAS_SCREEN = "tweaks_extras";
 	private static final String BACKLIGHT_SETTINGS = "backlight_settings";
 	private static final String GENERAL_CATEGORY = "general_category";
+
 
     private static final String UI_EXP_WIDGET = "expanded_widget";
     private static final String UI_EXP_WIDGET_HIDE_ONCHANGE = "expanded_hide_onchange";
@@ -51,6 +53,9 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
     private static final String POWER_PROMPT_PREF = "power_dialog_prompt";
     private static final String OVERSCROLL_PREF = "pref_overscroll";
     private static final String OVERSCROLL_WEIGHT_PREF = "pref_overscroll_weight";
+    private static final String NA_ON_PLUG_PREF = "pref_na_on_plug";
+    private static final String NA_ON_PLUG_PERSIST_PROP = "persist.sys.no_action_on_plug";
+    private static final String NA_ON_PLUG_DEFAULT = "0";
     
     /* Screen Lock */
     private static final String LOCKSCREEN_TIMEOUT_DELAY_PREF = "pref_lockscreen_timeout_delay";
@@ -63,6 +68,8 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
 
     private CheckBoxPreference mPowerPromptPref;
     private ListPreference mRenderEffectPref;
+
+    private CheckBoxPreference mNaOnPlugPref;
     
     private ListPreference mScreenLockTimeoutDelayPref;
     private ListPreference mScreenLockScreenOffDelayPref;
@@ -133,6 +140,11 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
         mRenderEffectPref.setOnPreferenceChangeListener(this);
         updateFlingerOptions();
 
+        /* Keep display off on plug */
+        mNaOnPlugPref = (CheckBoxPreference) prefSet.findPreference(NA_ON_PLUG_PREF);
+        String naOnPlug = SystemProperties.get(NA_ON_PLUG_PERSIST_PROP, NA_ON_PLUG_DEFAULT);
+        mNaOnPlugPref.setChecked("1".equals(naOnPlug));
+
         /* Expanded View Power Widget */
         mPowerWidget = (CheckBoxPreference) prefSet.findPreference(UI_EXP_WIDGET);
         mPowerWidgetHideOnChange = (CheckBoxPreference)
@@ -193,6 +205,11 @@ public class UIActivity extends PreferenceActivity implements OnPreferenceChange
             value = mPowerPromptPref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.POWER_DIALOG_PROMPT, value ? 1 : 0);
+        }
+
+        if (preference == mNaOnPlugPref) {
+            SystemProperties.set(NA_ON_PLUG_PERSIST_PROP,
+                    mNaOnPlugPref.isChecked() ? "1" : "0");
         }
 
         if (preference == mRotation90Pref ||

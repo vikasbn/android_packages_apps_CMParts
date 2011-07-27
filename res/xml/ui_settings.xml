@@ -31,6 +31,11 @@
                 android:targetClass="com.cyanogenmod.cmparts.activities.BacklightActivity" />
         </PreferenceScreen>
 
+        <!-- Keep display off on plug -->
+        <CheckBoxPreference android:key="pref_na_on_plug"
+            android:title="@string/pref_na_on_plug_title"
+            android:summary="@string/pref_na_on_plug_summary" />
+
     </PreferenceCategory>
 
     <!-- Status Bar Customization -->
