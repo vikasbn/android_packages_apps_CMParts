@@ -48,6 +48,9 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String VOLBTN_ORIENT_PREF = "pref_volbtn_orientation";
     private static final String VOLBTN_ORIENT_PERSIST_PROP = "persist.sys.volbtn_orient_swap";
     private static final String VOLBTN_ORIENT_DEFAULT = "0";
+    private static final String FIVE_MULTITOUCH_PREF = "pref_five_multitouch";
+    private static final String FIVE_MULTITOUCH_PERSIST_PROP = "persist.sys.five_multitouch";
+    private static final String FIVE_MULTITOUCH_DEFAULT = "0";
 
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
@@ -59,6 +62,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private CheckBoxPreference mDisableUnlockTab;
     private CheckBoxPreference mDockObserverOffPref;
     private CheckBoxPreference mVolBtnOrientationPref;
+    private CheckBoxPreference mFiveMultitouchPref;
 
     private ListPreference mLockscreenStylePref;
     private ListPreference mKeypadTypePref;
@@ -158,6 +162,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         String volBtnOrientation = SystemProperties.get(VOLBTN_ORIENT_PERSIST_PROP, VOLBTN_ORIENT_DEFAULT);
         mVolBtnOrientationPref.setChecked("1".equals(volBtnOrientation));
 
+        /* 5-point multitouch */
+        mFiveMultitouchPref = (CheckBoxPreference) prefSet.findPreference(FIVE_MULTITOUCH_PREF);
+        String fiveMultitouch = SystemProperties.get(FIVE_MULTITOUCH_PERSIST_PROP, FIVE_MULTITOUCH_DEFAULT);
+        mFiveMultitouchPref.setChecked("1".equals(fiveMultitouch));
+
         PreferenceCategory buttonCategory = (PreferenceCategory)prefSet.findPreference(BUTTON_CATEGORY);
 
         if (!getResources().getBoolean(R.bool.has_trackball)) {
@@ -254,6 +263,10 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
 	} else if (preference == mVolBtnOrientationPref) {
             SystemProperties.set(VOLBTN_ORIENT_PERSIST_PROP,
                     mVolBtnOrientationPref.isChecked() ? "1" : "0");
+            return true;
+        } else if (preference == mFiveMultitouchPref) {
+            SystemProperties.set(FIVE_MULTITOUCH_PERSIST_PROP,
+                    mFiveMultitouchPref.isChecked() ? "1" : "0");
             return true;
         } else if (preference == mUserDefinedKey2Pref) {
             pickShortcut(2);
