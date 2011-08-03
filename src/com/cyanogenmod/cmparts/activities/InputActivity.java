@@ -265,10 +265,6 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             SystemProperties.set(VOLBTN_ORIENT_PERSIST_PROP,
                     mVolBtnOrientationPref.isChecked() ? "1" : "0");
             return true;
-        } else if (preference == mQtouchNumPref) {
-            String qtouchNum = (String) newValue;
-            SystemProperties.set(QTOUCH_NUM_PERSIST_PROP, qtouchNum);
-            return true;
         } else if (preference == mUserDefinedKey2Pref) {
             pickShortcut(2);
             return true;
@@ -297,6 +293,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
 	else if (preference == mKeypadTypePref) {
             String keypadType = (String) newValue;
             SystemProperties.set(KEYPAD_TYPE_PERSIST_PROP, keypadType);
+            return true;
+        }
+        else if (preference == mQtouchNumPref) {
+            String qtouchNum = (String) newValue;
+            SystemProperties.set(QTOUCH_NUM_PERSIST_PROP, qtouchNum);
             return true;
         }
         return false;
