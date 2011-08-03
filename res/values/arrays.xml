@@ -474,4 +474,16 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="pref_qtouch_num_entries">
+        <item>2</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="pref_qtouch_num_values" translatable="false">
+        <item>2</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 </resources>
