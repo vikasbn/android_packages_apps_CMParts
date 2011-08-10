@@ -27,6 +27,9 @@ public class SoundActivity extends PreferenceActivity implements
     private static final int DIALOG_QUIET_HOURS_START = 1;
     private static final int DIALOG_QUIET_HOURS_END = 2;
 
+    private static final String CAMERA_SOUNDS_PREF = "camera_sounds";
+    private static final String CAMERA_SOUNDS_PERSIST_PROP = "persist.sys.disable_cam_snd";
+    private static final String CAMERA_SOUNDS_DEFAULT = "0";
     private static final String KEY_POWER_SOUNDS = "power_sounds";
     private static final String NOTIFICATIONS_FOCUS = "notif-focus";
     private static final String NOTIFICATIONS_SPEAKER = "notif-speaker";
@@ -53,6 +56,7 @@ public class SoundActivity extends PreferenceActivity implements
     private CheckBoxPreference mQuietHoursMute;
     private CheckBoxPreference mQuietHoursStill;
     private CheckBoxPreference mQuietHoursDim;
+    private CheckBoxPreference mCameraSoundsPref;
 
     private static String getKey(String suffix) {
         return PREFIX + suffix;
@@ -71,6 +75,10 @@ public class SoundActivity extends PreferenceActivity implements
         p.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.POWER_SOUNDS_ENABLED, 1) != 0);
         p.setOnPreferenceChangeListener(this);
+
+        mCameraSoundsPref = (CheckBoxPreference) prefSet.findPreference(CAMERA_SOUNDS_PREF);
+        String camera_sounds = SystemProperties.get(CAMERA_SOUNDS_PERSIST_PROP, CAMERA_SOUNDS_DEFAULT);
+        mCameraSoundsPref.setChecked("1".equals(camera_sounds));
 
         p = (CheckBoxPreference) prefSet.findPreference(NOTIFICATIONS_FOCUS);
         p.setChecked(Settings.System.getInt(getContentResolver(),
@@ -148,6 +156,10 @@ public class SoundActivity extends PreferenceActivity implements
             Settings.System.putInt(getContentResolver(),
                     Settings.System.QUIET_HOURS_DIM,
                     mQuietHoursDim.isChecked() ? 1 : 0);
+            return true;
+        } else if (preference == mCameraSoundsPref) {
+            SystemProperties.set(CAMERA_SOUNDS_PERSIST_PROP,
+                    mCameraSoundsPref.isChecked() ? "1" : "0");
             return true;
         } else if (preference == mQuietHoursStart) {
             showDialog(DIALOG_QUIET_HOURS_START);

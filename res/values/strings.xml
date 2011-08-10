@@ -498,6 +498,10 @@
     <string name="power_sounds_enable_title">Low battery sound</string>
     <string name="power_sounds_enable_summary">Play a sound when battery is low</string>
 
+     <!-- Camera Sounds -->
+    <string name="camera_sounds_enable_title">Disable camera sounds</string>
+    <string name="camera_sounds_enable_summary">Disables the camera shutter sounds</string> 
+
     <!--  Lockscreen gesture strings -->
     <string name="pref_lockscreen_title">Lockscreen gestures</string>
     <string name="pref_lockscreen_gestures_enable_title">Use lockscreen gestures</string>

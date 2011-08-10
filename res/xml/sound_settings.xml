@@ -5,7 +5,12 @@
     <CheckBoxPreference android:key="power_sounds"
         android:title="@string/power_sounds_enable_title"
         android:summary="@string/power_sounds_enable_summary"
-        android:persistent="false" />    
+        android:persistent="false" />
+
+    <!-- Camera Sounds -->
+    <CheckBoxPreference android:key="camera_sounds"
+        android:title="@string/camera_sounds_enable_title"
+        android:summary="@string/camera_sounds_enable_summary" />     
 
     <!-- Notifications -->
     <CheckBoxPreference android:key="notif-focus"
