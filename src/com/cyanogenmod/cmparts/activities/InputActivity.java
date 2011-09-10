@@ -28,6 +28,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String LOCKSCREEN_MUSIC_CONTROLS = "lockscreen_music_controls";
     private static final String LOCKSCREEN_ALWAYS_MUSIC_CONTROLS = "lockscreen_always_music_controls";
     private static final String TRACKBALL_WAKE_PREF = "pref_trackball_wake";
+	private static final String VOLUME_WAKE_PREF = "pref_volume_wake";
     private static final String TRACKBALL_UNLOCK_PREF = "pref_trackball_unlock";
     private static final String MENU_UNLOCK_PREF = "pref_menu_unlock";
     private static final String BUTTON_CATEGORY = "pref_category_button_settings";
@@ -55,6 +56,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
     private CheckBoxPreference mTrackballWakePref;
+	private CheckBoxPreference mVolumeWakePref;
     private CheckBoxPreference mTrackballUnlockPref;
     private CheckBoxPreference mMenuUnlockPref;
     private CheckBoxPreference mQuickUnlockScreenPref;
@@ -124,6 +126,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mTrackballWakePref = (CheckBoxPreference) prefSet.findPreference(TRACKBALL_WAKE_PREF);
         mTrackballWakePref.setChecked(Settings.System.getInt(getContentResolver(), 
                 Settings.System.TRACKBALL_WAKE_SCREEN, 0) == 1);
+				
+		/* Volume Wake */
+        mVolumeWakePref = (CheckBoxPreference) prefSet.findPreference(VOLUME_WAKE_PREF);
+        mVolumeWakePref.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
 
         /* Trackball Unlock */
         mTrackballUnlockPref = (CheckBoxPreference) prefSet.findPreference(TRACKBALL_UNLOCK_PREF);
@@ -239,6 +246,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             value = mTrackballWakePref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.TRACKBALL_WAKE_SCREEN, value ? 1 : 0);
+            return true;
+		} else if (preference == mVolumeWakePref) {
+            value = mVolumeWakePref.isChecked();
+            Settings.System.putInt(getContentResolver(),
+			        Settings.System.VOLUME_WAKE_SCREEN, value ? 1 : 0);
             return true;
         } else if (preference == mTrackballUnlockPref) {
             value = mTrackballUnlockPref.isChecked();
