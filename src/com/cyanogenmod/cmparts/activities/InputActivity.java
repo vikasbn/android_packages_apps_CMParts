@@ -28,12 +28,13 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
     private static final String LOCKSCREEN_MUSIC_CONTROLS = "lockscreen_music_controls";
     private static final String LOCKSCREEN_ALWAYS_MUSIC_CONTROLS = "lockscreen_always_music_controls";
     private static final String TRACKBALL_WAKE_PREF = "pref_trackball_wake";
-	private static final String VOLUME_WAKE_PREF = "pref_volume_wake";
+    private static final String VOLUME_WAKE_PREF = "pref_volume_wake";
     private static final String TRACKBALL_UNLOCK_PREF = "pref_trackball_unlock";
     private static final String MENU_UNLOCK_PREF = "pref_menu_unlock";
     private static final String BUTTON_CATEGORY = "pref_category_button_settings";
     private static final String LOCKSCREEN_STYLE_PREF = "pref_lockscreen_style";
     private static final String LOCKSCREEN_QUICK_UNLOCK_CONTROL = "lockscreen_quick_unlock_control";
+    private static final String LOCKSCREEN_ALWAYS_BATTERY = "lockscreen_always_battery";
     private static final String LOCKSCREEN_PHONE_MESSAGING_TAB = "lockscreen_phone_messaging_tab";
     private static final String LOCKSCREEN_DISABLE_UNLOCK_TAB = "lockscreen_disable_unlock_tab";
     private static final String USER_DEFINED_KEY1 = "pref_user_defined_key1";
@@ -55,8 +56,9 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
 
     private CheckBoxPreference mMusicControlPref;
     private CheckBoxPreference mAlwaysMusicControlPref;
+    private CheckBoxPreference mAlwaysBatteryPref;
     private CheckBoxPreference mTrackballWakePref;
-	private CheckBoxPreference mVolumeWakePref;
+    private CheckBoxPreference mVolumeWakePref;
     private CheckBoxPreference mTrackballUnlockPref;
     private CheckBoxPreference mMenuUnlockPref;
     private CheckBoxPreference mQuickUnlockScreenPref;
@@ -98,6 +100,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mAlwaysMusicControlPref.setChecked(Settings.System.getInt(getContentResolver(), 
                 Settings.System.LOCKSCREEN_ALWAYS_MUSIC_CONTROLS, 0) == 1);
 
+        /* Always Display Battery Status */
+        mAlwaysBatteryPref = (CheckBoxPreference) prefSet.findPreference(LOCKSCREEN_ALWAYS_BATTERY);
+        mAlwaysBatteryPref.setChecked(Settings.System.getInt(getContentResolver(), 
+                Settings.System.LOCKSCREEN_ALWAYS_BATTERY, 0) == 1);
+
         /* Quick Unlock Screen Control */
         mQuickUnlockScreenPref = (CheckBoxPreference)
                 prefSet.findPreference(LOCKSCREEN_QUICK_UNLOCK_CONTROL);
@@ -127,7 +134,7 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
         mTrackballWakePref.setChecked(Settings.System.getInt(getContentResolver(), 
                 Settings.System.TRACKBALL_WAKE_SCREEN, 0) == 1);
 				
-		/* Volume Wake */
+        /* Volume Wake */
         mVolumeWakePref = (CheckBoxPreference) prefSet.findPreference(VOLUME_WAKE_PREF);
         mVolumeWakePref.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
@@ -231,6 +238,11 @@ public class InputActivity extends PreferenceActivity implements OnPreferenceCha
             value = mAlwaysMusicControlPref.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.LOCKSCREEN_ALWAYS_MUSIC_CONTROLS, value ? 1 : 0);
+            return true;
+        } else if (preference == mAlwaysBatteryPref) {
+            value = mAlwaysBatteryPref.isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.LOCKSCREEN_ALWAYS_BATTERY, value ? 1 : 0);
             return true;
         } else if (preference == mQuickUnlockScreenPref) {
             value = mQuickUnlockScreenPref.isChecked();
