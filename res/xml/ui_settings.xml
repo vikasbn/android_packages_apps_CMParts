@@ -9,7 +9,7 @@
             android:title="@string/trackball_title" android:summary="@string/trackball_summary">
             <intent android:action="android.intent.action.MAIN"
                 android:targetPackage="com.cyanogenmod.cmparts"
-                android:targetClass="com.cyanogenmod.cmparts.activities.TrackballNotificationActivity" />
+                android:targetClass="com.cyanogenmod.cmparts.activities.led.NotificationActivity" />
         </PreferenceScreen>
         
         <!-- Power prompt -->
