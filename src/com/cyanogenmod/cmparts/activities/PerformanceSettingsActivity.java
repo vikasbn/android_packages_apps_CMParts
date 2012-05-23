@@ -60,7 +60,7 @@ public class PerformanceSettingsActivity extends PreferenceActivity implements P
 
     private static final String LOCK_MMS_PREF = "pref_lock_mms";
 
-    private static final int LOCK_HOME_DEFAULT = 0;
+    private static final int LOCK_HOME_DEFAULT = 1;
 
     private static final int LOCK_MMS_DEFAULT = 1;
 
