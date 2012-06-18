@@ -20,7 +20,6 @@
         <receiver android:name=".intents.CatchThemeListReceiver" android:enabled="true">
             <intent-filter>
                 <action android:name="com.cyanogenmod.cmpartshelper.GET_THEME_LIST"></action>
-                <action android:name="android.intent.action.MEDIA_MOUNTED" />
             </intent-filter>
         </receiver>
         <receiver android:name=".intents.LEDNotificationReceiver" android:enabled="true">
