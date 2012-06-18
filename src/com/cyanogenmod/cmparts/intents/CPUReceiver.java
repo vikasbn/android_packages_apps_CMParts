@@ -109,9 +109,9 @@ public class CPUReceiver extends BroadcastReceiver {
         if (noSettings) {
             Log.d(TAG, "No settings saved. Nothing to restore.");
         } else {
-            List<String> governors = Arrays.asList(CPUActivity.readOneLine(
+            governors = Arrays.asList(CPUActivity.readOneLine(
                     CPUActivity.GOVERNORS_LIST_FILE).split(" "));
-            List<String> frequencies = Arrays.asList(CPUActivity.readOneLine(
+            frequencies = Arrays.asList(CPUActivity.readOneLine(
                     CPUActivity.FREQ_LIST_FILE).split(" "));
             if (governor != null && governors.contains(governor)) {
                 CPUActivity.writeOneLine(CPUActivity.GOVERNOR, governor);
