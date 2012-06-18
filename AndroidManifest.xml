@@ -21,9 +21,6 @@
             <intent-filter>
                 <action android:name="com.cyanogenmod.cmpartshelper.GET_THEME_LIST"></action>
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
-                <action android:name="android.intent.action.DOCK_EVENT" />
-                <action android:name="android.intent.action.SCREEN_OFF" />
-                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
         <receiver android:name=".intents.LEDNotificationReceiver" android:enabled="true">
@@ -38,6 +35,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
                 <data android:scheme="file" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".intents.CPUReceiver" android:enabled="true" android:process="com.android.systemui">
+            <intent-filter>
+                <action android:name="android.intent.action.DOCK_EVENT" />
+                <action android:name="android.intent.action.SCREEN_OFF" />
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
         <activity android:name=".activities.MainActivity" android:label="@string/app_name">
