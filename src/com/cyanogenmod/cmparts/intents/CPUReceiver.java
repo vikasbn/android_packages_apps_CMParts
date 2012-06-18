@@ -41,7 +41,13 @@ public class CPUReceiver extends BroadcastReceiver {
         String governor = prefs.getString(CPUActivity.GOV_PREF, null);
         String minFrequency = prefs.getString(CPUActivity.MIN_FREQ_PREF, null);
         String maxFrequency = prefs.getString(CPUActivity.MAX_FREQ_PREF, null);
-        boolean noSettings = (governor == null) && (minFrequency == null) && (maxFrequency == null);
+        String availableFrequenciesLine = CPUActivity.readOneLine(CPUActivity.FREQ_LIST_FILE);
+        String availableGovernorsLine = CPUActivity.readOneLine(CPUActivity.GOVERNORS_LIST_FILE);
+        boolean noSettings = ((availableGovernorsLine == null) || (governor == null)) && 
+                             ((availableFrequenciesLine == null) || ((minFrequency == null) && (maxFrequency == null)));
+        List<String> frequencies = null;
+        List<String> governors = null;
+
 
         if (noSettings) {
             Log.d(TAG, "No settings saved. Nothing to restore.");
